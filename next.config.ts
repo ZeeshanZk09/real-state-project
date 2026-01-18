@@ -20,11 +20,6 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  api: {
-    bodyParser: {
-      sizeLimit: "10mb", // Increase size limit for large uploads
-    },
-  },
   eslint: {
     ignoreDuringBuilds: true,
   },
