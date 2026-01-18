@@ -2,7 +2,7 @@ import { ENV } from "@/utils/constants";
 import nodemailer from "nodemailer";
 
 // Create reusable transporter object using SMTP transport
-const transporter = nodemailer.createTransporter({
+const transporter = nodemailer.createTransport({
   host: ENV.SMTP_HOST,
   port: ENV.SMTP_PORT,
   secure: ENV.SMTP_PORT === 465, // true for 465, false for other ports
