@@ -58,7 +58,8 @@ export const ModelName = {
   Property: 'Property',
   PropertyDetail: 'PropertyDetail',
   PropertyImage: 'PropertyImage',
-  SavedProperty: 'SavedProperty'
+  SavedProperty: 'SavedProperty',
+  Inquiry: 'Inquiry'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -83,6 +84,7 @@ export const UserScalarFieldEnum = {
   lastName: 'lastName',
   location: 'location',
   email: 'email',
+  emailVerified: 'emailVerified',
   image: 'image',
   password: 'password',
   skillLevel: 'skillLevel',
@@ -150,6 +152,8 @@ export const PropertyScalarFieldEnum = {
   BasementSqFt: 'BasementSqFt',
   propertyType: 'propertyType',
   isForSale: 'isForSale',
+  status: 'status',
+  ownerId: 'ownerId',
   appliances: 'appliances',
   basement: 'basement',
   floorCovering: 'floorCovering',
@@ -165,7 +169,8 @@ export const PropertyScalarFieldEnum = {
   parking: 'parking',
   roof: 'roof',
   view: 'view',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type PropertyScalarFieldEnum = (typeof PropertyScalarFieldEnum)[keyof typeof PropertyScalarFieldEnum]
@@ -207,6 +212,21 @@ export const SavedPropertyScalarFieldEnum = {
 } as const
 
 export type SavedPropertyScalarFieldEnum = (typeof SavedPropertyScalarFieldEnum)[keyof typeof SavedPropertyScalarFieldEnum]
+
+
+export const InquiryScalarFieldEnum = {
+  id: 'id',
+  propertyId: 'propertyId',
+  senderId: 'senderId',
+  name: 'name',
+  email: 'email',
+  phone: 'phone',
+  message: 'message',
+  status: 'status',
+  createdAt: 'createdAt'
+} as const
+
+export type InquiryScalarFieldEnum = (typeof InquiryScalarFieldEnum)[keyof typeof InquiryScalarFieldEnum]
 
 
 export const SortOrder = {

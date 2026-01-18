@@ -57,3 +57,8 @@ export type PropertyImage = Prisma.PropertyImageModel
  * 
  */
 export type SavedProperty = Prisma.SavedPropertyModel
+/**
+ * Model Inquiry
+ * 
+ */
+export type Inquiry = Prisma.InquiryModel
