@@ -12,17 +12,17 @@ export const PAYMENT_CONFIG = {
   // Stripe configuration (placeholder)
   stripe: {
     enabled: false,
-    publicKey: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || '',
-    secretKey: process.env.STRIPE_SECRET_KEY || '',
-    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || '',
+    publicKey: process.env.NEXT_PUBLIC_STRIPE_PUBLIC_KEY || "",
+    secretKey: process.env.STRIPE_SECRET_KEY || "",
+    webhookSecret: process.env.STRIPE_WEBHOOK_SECRET || "",
   },
 
   // PayPal configuration (placeholder)
   paypal: {
     enabled: false,
-    clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || '',
-    clientSecret: process.env.PAYPAL_CLIENT_SECRET || '',
-    mode: process.env.PAYPAL_MODE || 'sandbox', // 'sandbox' or 'live'
+    clientId: process.env.NEXT_PUBLIC_PAYPAL_CLIENT_ID || "",
+    clientSecret: process.env.PAYPAL_CLIENT_SECRET || "",
+    mode: process.env.PAYPAL_MODE || "sandbox", // 'sandbox' or 'live'
   },
 };
 
@@ -33,13 +33,13 @@ export const COMPARISON_CONFIG = {
   enabled: false,
   maxCompareItems: 3, // Maximum properties that can be compared at once
   comparisonFields: [
-    'price',
-    'bedrooms',
-    'bathrooms',
-    'sqft',
-    'location',
-    'propertyType',
-    'yearBuilt',
+    "price",
+    "bedrooms",
+    "bathrooms",
+    "sqft",
+    "location",
+    "propertyType",
+    "yearBuilt",
   ],
 };
 
@@ -48,9 +48,9 @@ export const COMPARISON_CONFIG = {
 // ============================================
 export const AI_CONFIG = {
   enabled: false,
-  provider: 'openai', // 'openai', 'anthropic', or custom
-  apiKey: process.env.AI_API_KEY || '',
-  model: 'gpt-4', // AI model to use
+  provider: "openai", // 'openai', 'anthropic', or custom
+  apiKey: process.env.AI_API_KEY || "",
+  model: "gpt-4", // AI model to use
   features: {
     propertyRecommendations: {
       enabled: false,
@@ -72,17 +72,17 @@ export const AI_CONFIG = {
 export const MOBILE_APP_CONFIG = {
   ios: {
     enabled: false,
-    appStoreUrl: '',
-    bundleId: 'com.realestate.app',
+    appStoreUrl: "",
+    bundleId: "com.zebotix.wbas",
   },
   android: {
     enabled: false,
-    playStoreUrl: '',
-    packageName: 'com.realestate.app',
+    playStoreUrl: "",
+    packageName: "com.zebotix.wbas",
   },
   pushNotifications: {
     enabled: false,
-    fcmServerKey: process.env.FCM_SERVER_KEY || '',
+    fcmServerKey: process.env.FCM_SERVER_KEY || "",
   },
 };
 
@@ -93,15 +93,15 @@ export const ADVANCED_FEATURES = {
   // Virtual tours / 360° property views
   virtualTours: {
     enabled: false,
-    provider: 'matterport', // 'matterport', 'cloudpano', or custom
-    apiKey: process.env.VIRTUAL_TOUR_API_KEY || '',
+    provider: "matterport", // 'matterport', 'cloudpano', or custom
+    apiKey: process.env.VIRTUAL_TOUR_API_KEY || "",
   },
 
   // Video calls for property viewing
   videoCalls: {
     enabled: false,
-    provider: 'twilio', // 'twilio', 'agora', or custom
-    apiKey: process.env.VIDEO_CALL_API_KEY || '',
+    provider: "twilio", // 'twilio', 'agora', or custom
+    apiKey: process.env.VIDEO_CALL_API_KEY || "",
   },
 
   // Mortgage calculator
@@ -123,14 +123,14 @@ export const ADVANCED_FEATURES = {
   // Multi-language support
   i18n: {
     enabled: false,
-    defaultLanguage: 'en',
-    supportedLanguages: ['en', 'es', 'fr', 'de'],
+    defaultLanguage: "en",
+    supportedLanguages: ["en", "es", "fr", "de"],
   },
 
   // Advanced map features
   maps: {
-    provider: 'google', // Current: basic, Future: 'google', 'mapbox'
-    apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || '',
+    provider: "google", // Current: basic, Future: 'google', 'mapbox'
+    apiKey: process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "",
     features: {
       streetView: false,
       satelliteView: false,
@@ -146,41 +146,41 @@ export const ADVANCED_FEATURES = {
 // ============================================
 export const NOTIFICATION_CONFIG = {
   email: {
-    provider: 'nodemailer', // Using Nodemailer with SMTP
-    from: process.env.EMAIL_FROM || '"Real Estate" <noreply@realestate.com>',
+    provider: "nodemailer", // Using Nodemailer with SMTP
+    from: process.env.EMAIL_FROM || '"Zebotix WBAs" <noreply@zebotix.com>',
     smtp: {
-      host: process.env.SMTP_HOST || 'localhost',
-      port: parseInt(process.env.SMTP_PORT || '587'),
-      secure: process.env.SMTP_PORT === '465',
+      host: process.env.SMTP_HOST || "localhost",
+      port: parseInt(process.env.SMTP_PORT || "587"),
+      secure: process.env.SMTP_PORT === "465",
       auth: {
-        user: process.env.SMTP_USER || '',
-        pass: process.env.SMTP_PASS || '',
+        user: process.env.SMTP_USER || "",
+        pass: process.env.SMTP_PASS || "",
       },
     },
     templates: {
       propertyInquiry: {
         enabled: true,
-        subject: 'New Property Inquiry',
+        subject: "New Property Inquiry",
       },
       propertyApproval: {
         enabled: true,
-        subject: 'Property Listing Approved',
+        subject: "Property Listing Approved",
       },
       propertyRejection: {
         enabled: true,
-        subject: 'Property Listing Requires Changes',
+        subject: "Property Listing Requires Changes",
       },
       welcomeEmail: {
         enabled: false,
-        subject: 'Welcome to Real Estate Platform',
+        subject: "Welcome to Real Estate Platform",
       },
     },
   },
 
   sms: {
     enabled: false,
-    provider: 'twilio', // 'twilio', 'nexmo', or custom
-    apiKey: process.env.SMS_API_KEY || '',
+    provider: "twilio", // 'twilio', 'nexmo', or custom
+    apiKey: process.env.SMS_API_KEY || "",
   },
 };
 
@@ -188,22 +188,23 @@ export const NOTIFICATION_CONFIG = {
 // SEO & Marketing Configuration
 // ============================================
 export const SEO_CONFIG = {
-  siteName: 'Real Estate Platform',
-  defaultMetaDescription: 'Find your dream property - Buy, Sell, and Rent properties online',
-  defaultMetaImage: '/og-image.jpg',
-  twitterHandle: '@realestate',
+  siteName: "Zebotix - Web & Business Automation Solutions",
+  defaultMetaDescription:
+    "Professional web and business automation solutions - Streamline your operations with our innovative platform",
+  defaultMetaImage: "/og-image.jpg",
+  twitterHandle: "@zebotix",
 
   // Schema.org structured data
   structuredData: {
     enabled: true,
-    organizationName: 'Real Estate Platform',
-    organizationUrl: process.env.NEXT_PUBLIC_SITE_URL || 'https://realestate.com',
+    organizationName: "Zebotix - Web & Business Automation Solutions",
+    organizationUrl: process.env.NEXT_PUBLIC_SITE_URL || "https://zebotix.com",
   },
 
   // Google Analytics
   googleAnalytics: {
     enabled: false,
-    measurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || '',
+    measurementId: process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || "",
   },
 };
 
@@ -219,7 +220,8 @@ export function isFeatureEnabled(feature: string): boolean {
     payment: PAYMENT_CONFIG.stripe.enabled || PAYMENT_CONFIG.paypal.enabled,
     comparison: COMPARISON_CONFIG.enabled,
     aiRecommendations: AI_CONFIG.enabled,
-    mobileApp: MOBILE_APP_CONFIG.ios.enabled || MOBILE_APP_CONFIG.android.enabled,
+    mobileApp:
+      MOBILE_APP_CONFIG.ios.enabled || MOBILE_APP_CONFIG.android.enabled,
     virtualTours: ADVANCED_FEATURES.virtualTours.enabled,
     videoCalls: ADVANCED_FEATURES.videoCalls.enabled,
     analytics: ADVANCED_FEATURES.analytics.enabled,

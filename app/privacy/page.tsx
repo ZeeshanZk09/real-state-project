@@ -52,7 +52,8 @@ export default function PrivacyPage() {
           <p>
             <strong>Company</strong> (referred to as either &quot;the
             Company&quot;, &quot;We&quot;, &quot;Us&quot; or &quot;Our&quot; in
-            this Agreement) refers to Hamid-Homes.
+            this Agreement) refers to Zebotix - Web & Business Automation
+            Solutions.
           </p>
         </li>
         <li>
@@ -111,7 +112,8 @@ export default function PrivacyPage() {
         </li>
         <li>
           <p>
-            <strong>Website</strong> refers to Hamid-Homes, accessible from{" "}
+            <strong>Website</strong> refers to Zebotix - Web & Business
+            Automation Solutions, accessible from{" "}
             <a
               href="https://hamidestate.vercel.app"
               rel="external nofollow noopener"

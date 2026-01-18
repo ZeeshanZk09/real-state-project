@@ -22,7 +22,7 @@ interface EmailOptions {
 export async function sendEmail({ to, subject, html, from }: EmailOptions) {
   try {
     const info = await transporter.sendMail({
-      from: from || ENV.EMAIL_FROM || '"Real Estate" <noreply@realestate.com>',
+      from: from || ENV.EMAIL_FROM || '"Zebotix WBAs" <noreply@zebotix.com>',
       to,
       subject,
       html,

@@ -77,7 +77,7 @@ export default function UserSidebar() {
           href={`/`}
           className="font-bold hover:text-blue-600 transition-colors"
         >
-          <h1 className="text-xl">HAMID-HOMES</h1>
+          <h1 className="text-xl">ZEBOTIX WBAS</h1>
         </Link>
       </div>
 
@@ -98,7 +98,9 @@ export default function UserSidebar() {
       )}
 
       <ul className="flex-1 h-full overflow-y-auto flex flex-col gap-4">
-        {filteredMenuList?.map((item, key) => <Tab item={item} key={key} />)}
+        {filteredMenuList?.map((item, key) => (
+          <Tab item={item} key={key} />
+        ))}
       </ul>
 
       <div className="flex justify-center">

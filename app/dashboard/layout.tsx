@@ -22,16 +22,16 @@ export default async function DashboardLayout({
 
   return (
     <RouteGuard allowedRoles={["USER", "ADMIN"]} requireAuth={true}>
-      <main className="flex min-h-screen bg-gray-50">
+      <main className="flex min-h-screen bg-background">
         <div className="hidden md:block">
           <UserSidebar />
         </div>
         <section className="flex-1 flex flex-col">
-          <header className="bg-white shadow-sm border-b p-4">
-            <h2 className="text-xl font-semibold text-gray-800">
+          <header className=" shadow-sm border-b p-4">
+            <h2 className="text-xl font-semibold text-foreground">
               Welcome back, {session.user?.name || "User"}!
             </h2>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-foreground/70">
               Manage your properties and inquiries
             </p>
           </header>

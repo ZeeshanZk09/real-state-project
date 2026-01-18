@@ -79,7 +79,7 @@ export default function Sidebar() {
           href={`/`}
           className="font-bold hover:text-blue-600 transition-colors"
         >
-          <h1 className="text-xl">HAMID-HOMES</h1>
+          <h1 className="text-xl">ZEBOTIX WBAS</h1>
         </Link>
       </div>
 

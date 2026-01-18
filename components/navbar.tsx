@@ -118,7 +118,9 @@ export const Navbar = () => {
               className="flex justify-start items-center gap-1"
               href="/"
             >
-              <p className="font-bold text-inherit text-xl">Hamid-Homes</p>
+              <p className="font-bold text-inherit text-xl">
+                Zebotix - Web & Business Automation Solutions
+              </p>
             </NextLink>
           </NavbarBrand>
 

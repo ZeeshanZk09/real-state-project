@@ -37,33 +37,24 @@ const LoginForm = () => {
     },
   });
 
-  const onSubmit = (
-    values: z.infer<typeof LoginSchema>
-  ) => {
+  const onSubmit = (values: z.infer<typeof LoginSchema>) => {
     execute(values);
   };
 
   return (
-    <div className=" p-8 rounded-lg shadow-md max-w-md w-full mx-auto bg-[#313131]">
-      <h3 className="text-3xl font-bold text-center mb-2">
-        Welcome Back
-      </h3>
+    <div className=" p-8 rounded-lg shadow-md max-w-md w-full mx-auto bg-backgrround">
+      <h3 className="text-3xl font-bold text-center mb-2">Welcome Back</h3>
       <p className=" text-sm text-center mb-8">
         👋 Please enter your credentials to log in
       </p>
       <Form {...form}>
-        <form
-          onSubmit={form.handleSubmit(onSubmit)}
-          className="space-y-6"
-        >
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
             control={form.control}
             name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Email
-                </FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -80,9 +71,7 @@ const LoginForm = () => {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>
-                  Password
-                </FormLabel>
+                <FormLabel>Password</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
@@ -95,27 +84,19 @@ const LoginForm = () => {
             )}
           />
           <Button className="w-full">
-            {status === "executing"
-              ? "Logging in..."
-              : "Log In"}
+            {status === "executing" ? "Logging in..." : "Log In"}
           </Button>
         </form>
       </Form>
       <p className="text-center text-sm mt-6">
         Don't have an account?{" "}
-        <a
-          href="/register"
-          className="text-blue-600 hover:underline"
-        >
+        <a href="/register" className="text-blue-600 hover:underline">
           Sign up
         </a>
       </p>
       <p className="text-center  text-sm mt-6">
         Let's back to home?{" "}
-        <Link
-          href="/"
-          className="text-blue-600 hover:underline"
-        >
+        <Link href="/" className="text-blue-600 hover:underline">
           Home
         </Link>
       </p>

@@ -8,8 +8,8 @@ import prisma from "../lib/prisma";
 
 export const authConfig = {
   pages: {
-    signIn: "/auth/sign-in",
-    error: "/auth/error",
+    signIn: "/login",
+    error: "/login",
   },
   callbacks: {
     authorized({ auth, request: { nextUrl } }) {

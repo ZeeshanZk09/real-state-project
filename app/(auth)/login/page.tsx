@@ -23,7 +23,7 @@ import { Button } from "@/components/ui/button";
 
 export default function LoginForm() {
   const router = useRouter();
-  const [formData, setFormData] = useState({
+  const [formData] = useState({
     email: "",
     password: "",
   });
@@ -35,12 +35,27 @@ export default function LoginForm() {
 
   const { execute } = useAction(LoginAccount, {
     onSuccess(data) {
+      console.log("Login action response: ", data);
       if (data.data?.error) {
+        console.error("Login error:", data.data.error);
         toast.error(data.data.error);
       } else if (data.data?.success) {
-        toast.success(data.data?.success);
-        router.push("/dashboard");
+        console.log("Login successful, redirecting...");
+        toast.success(data.data.success);
+        // Add a small delay to ensure session is set
+        setTimeout(() => {
+          console.log("Performing redirect to /dashboard");
+          router.push("/dashboard");
+          router.refresh();
+        }, 100);
+      } else {
+        console.warn("Unexpected response format:", data);
+        toast.error("Login failed. Please try again.");
       }
+    },
+    onError(error) {
+      console.error("Action execution error:", error);
+      toast.error("An error occurred during login. Please try again.");
     },
   });
 
@@ -57,12 +72,13 @@ export default function LoginForm() {
       <div className="flex-grow flex flex-col justify-center max-w-md mx-auto w-full">
         <div>
           <h3 className="text-3xl font-bold">Welcome Back</h3>
-          <p className="text-sm mt-3">
-            👋 Login to your account
-          </p>
+          <p className="text-sm mt-3">👋 Login to your account</p>
           <div className="mt-10">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <form
+                onSubmit={form.handleSubmit(onSubmit)}
+                className="space-y-6"
+              >
                 <FormField
                   control={form.control}
                   name="email"
@@ -70,7 +86,11 @@ export default function LoginForm() {
                     <FormItem>
                       <FormLabel>Email</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Enter email" type="email" />
+                        <Input
+                          {...field}
+                          placeholder="Enter email"
+                          type="email"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -84,7 +104,11 @@ export default function LoginForm() {
                     <FormItem>
                       <FormLabel>Password</FormLabel>
                       <FormControl>
-                        <Input {...field} placeholder="Enter password" type="password" />
+                        <Input
+                          {...field}
+                          placeholder="Enter password"
+                          type="password"
+                        />
                       </FormControl>
                       <FormMessage />
                     </FormItem>
@@ -92,8 +116,8 @@ export default function LoginForm() {
                 />
 
                 <div className="flex justify-end">
-                  <Link 
-                    href="/forgot-password" 
+                  <Link
+                    href="/forgot-password"
                     className="text-sm text-blue-500 hover:text-blue-700 hover:underline"
                   >
                     Forgot Password?
@@ -124,7 +148,10 @@ export default function LoginForm() {
         </p>
         <p className="text-sm">
           Want to register as an admin?{" "}
-          <Link href="/admin/register" className="text-blue-600 hover:underline">
+          <Link
+            href="/admin/register"
+            className="text-blue-600 hover:underline"
+          >
             Register as Admin
           </Link>
         </p>

@@ -106,7 +106,7 @@ export function createOwnerNotificationTemplate(
         <div class="container">
             <div class="header">
                 <h1>🏠 New Property Inquiry</h1>
-                <p>You've received a new inquiry from Hamid-Homes</p>
+                <p>You've received a new inquiry from Zebotix - Web & Business Automation Solutions</p>
             </div>
 
             <div class="content">
@@ -139,8 +139,8 @@ export function createOwnerNotificationTemplate(
             </div>
 
             <div class="footer">
-                <p>This email was sent by Hamid-Homes Real Estate Platform</p>
-                <p>© 2026 Hamid-Homes. All rights reserved.</p>
+                <p>This email was sent by Zebotix - Web & Business Automation Solutions Platform</p>
+                <p>© 2026 Zebotix WBAs. All rights reserved.</p>
             </div>
         </div>
     </body>
@@ -274,9 +274,9 @@ export function createInquiryConfirmationTemplate(
             </div>
 
             <div class="footer">
-                <p>Thank you for using Hamid-Homes Real Estate Platform</p>
-                <p>Need help? Contact us at support@hamidestate.com</p>
-                <p>© 2026 Hamid-Homes. All rights reserved.</p>
+                <p>Thank you for using Zebotix - Web & Business Automation Solutions Platform</p>
+                <p>Need help? Contact us at support@zebotix.com</p>
+                <p>© 2026 Zebotix WBAs. All rights reserved.</p>
             </div>
         </div>
     </body>
