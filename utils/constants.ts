@@ -18,8 +18,13 @@ export const ENV = {
   IMAGEKIT_PRIVATE_KEY: process.env.IMAGEKIT_PRIVATE_KEY!,
   IMAGEKIT_URL_ENDPOINT: process.env.IMAGEKIT_URL_ENDPOINT!,
 
-  // Email Service Configuration
-  RESEND_API_KEY: process.env.RESEND_API_KEY!,
+  // Email Service Configuration (SMTP)
+  SMTP_HOST: process.env.SMTP_HOST!,
+  SMTP_PORT: parseInt(process.env.SMTP_PORT || "587"),
+  SMTP_USER: process.env.SMTP_USER!,
+  SMTP_PASS: process.env.SMTP_PASS!,
+  EMAIL_FROM:
+    process.env.EMAIL_FROM || '"Real Estate" <noreply@realestate.com>',
 
   // Zillow API Configuration
   ZILLOW_API_KEY: process.env.ZILLOW_API_KEY!,

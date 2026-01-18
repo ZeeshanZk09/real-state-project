@@ -1,10 +1,17 @@
-'use client';
+"use client";
 
-import { useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { TrendingUp } from 'lucide-react';
-import { AreaChart, Area, XAxis, CartesianGrid, Tooltip } from 'recharts';
-import { PieChart, Pie, Cell } from 'recharts';
+import { useEffect, useState } from "react";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  AreaChart,
+  Area,
+  XAxis,
+  CartesianGrid,
+  Tooltip,
+  PieChart,
+  Pie,
+  Cell,
+} from "recharts";
 
 interface Property {
   id: number;
@@ -30,20 +37,24 @@ export default function Dashboard() {
   const [mounted, setMounted] = useState(false);
 
   const chartData = [
-    { month: 'Jan', value: 100 },
-    { month: 'Feb', value: 200 },
-    { month: 'Mar', value: 150 },
-    { month: 'Apr', value: 250 },
-    { month: 'May', value: 300 },
-    { month: 'Jun', value: 350 },
+    { month: "Jan", value: 100 },
+    { month: "Feb", value: 200 },
+    { month: "Mar", value: 150 },
+    { month: "Apr", value: 250 },
+    { month: "May", value: 300 },
+    { month: "Jun", value: 350 },
   ];
 
   const pieData = [
-    { name: 'For Sale', value: properties.filter((p) => p.isForSale).length, color: '#8884d8' },
     {
-      name: 'Not for Sale',
+      name: "For Sale",
+      value: properties.filter((p) => p.isForSale).length,
+      color: "#8884d8",
+    },
+    {
+      name: "Not for Sale",
       value: properties.filter((p) => !p.isForSale).length,
-      color: '#82ca9d',
+      color: "#82ca9d",
     },
   ];
 
@@ -54,8 +65,8 @@ export default function Dashboard() {
     const fetchData = async () => {
       try {
         const [usersRes, propertiesRes] = await Promise.all([
-          fetch('/api/users'),
-          fetch('/api/properties'),
+          fetch("/api/users"),
+          fetch("/api/properties"),
         ]);
 
         const usersData = await usersRes.json();
@@ -63,12 +74,16 @@ export default function Dashboard() {
 
         // Handle both response formats
         setUsers(Array.isArray(usersData) ? usersData : usersData.users || []);
-        setProperties(Array.isArray(propertiesData) ? propertiesData : []);
+        setProperties(
+          Array.isArray(propertiesData)
+            ? propertiesData
+            : propertiesData.properties || [],
+        );
 
-        console.log('Fetched Users:', usersData);
-        console.log('Fetched Properties:', propertiesData);
+        console.log("Fetched Users:", usersData);
+        console.log("Fetched Properties:", propertiesData);
       } catch (err) {
-        console.error('Error fetching data:', err);
+        console.error("Error fetching data:", err);
       } finally {
         setLoading(false);
       }
@@ -79,30 +94,30 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className='p-6 space-y-6'>
+      <div className="p-6 space-y-6">
         {/* Dashboard Stats Skeleton */}
-        <div className='grid grid-cols-4 gap-4'>
-          {[...Array(4)].map((_, i) => (
-            <Card key={i}>
+        <div className="grid grid-cols-4 gap-4">
+          {new Array(4).fill(null).map((_, i) => (
+            <Card key={i + 1}>
               <CardHeader>
-                <div className='h-5 bg-gray-200 rounded animate-pulse w-24'></div>
+                <div className="h-5 bg-gray-200 rounded animate-pulse w-24"></div>
               </CardHeader>
               <CardContent>
-                <div className='h-10 bg-gray-200 rounded animate-pulse w-16'></div>
+                <div className="h-10 bg-gray-200 rounded animate-pulse w-16"></div>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Charts Skeleton */}
-        <div className='grid grid-cols-2 gap-4'>
-          {[...Array(2)].map((_, i) => (
-            <Card key={i}>
+        <div className="grid grid-cols-2 gap-4">
+          {new Array(2).fill(null).map((_, i) => (
+            <Card key={i + 1}>
               <CardHeader>
-                <div className='h-5 bg-gray-200 rounded animate-pulse w-32'></div>
+                <div className="h-5 bg-gray-200 rounded animate-pulse w-32"></div>
               </CardHeader>
               <CardContent>
-                <div className='h-[250px] bg-gray-200 rounded animate-pulse'></div>
+                <div className="h-[250px] bg-gray-200 rounded animate-pulse"></div>
               </CardContent>
             </Card>
           ))}
@@ -111,12 +126,15 @@ export default function Dashboard() {
         {/* Table Skeleton */}
         <Card>
           <CardHeader>
-            <div className='h-5 bg-gray-200 rounded animate-pulse w-40'></div>
+            <div className="h-5 bg-gray-200 rounded animate-pulse w-40"></div>
           </CardHeader>
           <CardContent>
-            <div className='space-y-3'>
-              {[...Array(5)].map((_, i) => (
-                <div key={i} className='h-12 bg-gray-200 rounded animate-pulse'></div>
+            <div className="space-y-3">
+              {new Array(5).fill(null).map((_, i) => (
+                <div
+                  key={i + 1}
+                  className="h-12 bg-gray-200 rounded animate-pulse"
+                ></div>
               ))}
             </div>
           </CardContent>
@@ -126,15 +144,15 @@ export default function Dashboard() {
   }
 
   return (
-    <div className='p-6 space-y-6'>
+    <div className="p-6 space-y-6">
       {/* Dashboard Stats */}
-      <div className='grid grid-cols-4 gap-4'>
+      <div className="grid grid-cols-4 gap-4">
         <Card>
           <CardHeader>
             <CardTitle>Total Users</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-4xl font-bold'>{users && users.length ? users.length : 'N/A'}</p>
+            <p className="text-4xl font-bold">{users?.length ?? "N/A"}</p>
           </CardContent>
         </Card>
         <Card>
@@ -142,9 +160,7 @@ export default function Dashboard() {
             <CardTitle>Total Properties</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-4xl font-bold'>
-              {properties && properties.length ? properties.length : 'N/A'}
-            </p>
+            <p className="text-4xl font-bold">{properties?.length ?? "N/A"}</p>
           </CardContent>
         </Card>
         <Card>
@@ -152,7 +168,9 @@ export default function Dashboard() {
             <CardTitle>For Sale</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-4xl font-bold'>{properties.filter((p) => p.isForSale).length}</p>
+            <p className="text-4xl font-bold">
+              {properties.filter((p) => p.isForSale).length}
+            </p>
           </CardContent>
         </Card>
         <Card>
@@ -160,8 +178,8 @@ export default function Dashboard() {
             <CardTitle>Saved Properties</CardTitle>
           </CardHeader>
           <CardContent>
-            <p className='text-4xl font-bold'>
-              {isNaN(users.length * 2) ? 'N/A' : users.length * 2}
+            <p className="text-4xl font-bold">
+              {Number.isNaN(users.length * 2) ? "N/A" : users.length * 2}
             </p>
           </CardContent>
         </Card>
@@ -169,17 +187,22 @@ export default function Dashboard() {
 
       {/* Charts */}
       {mounted && (
-        <div className='grid grid-cols-2 gap-4'>
+        <div className="grid grid-cols-2 gap-4">
           <Card>
             <CardHeader>
               <CardTitle>Visitor Growth</CardTitle>
             </CardHeader>
             <CardContent>
               <AreaChart width={400} height={250} data={chartData}>
-                <CartesianGrid strokeDasharray='3 3' />
-                <XAxis dataKey='month' />
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis dataKey="month" />
                 <Tooltip />
-                <Area type='monotone' dataKey='value' stroke='#8884d8' fill='#8884d8' />
+                <Area
+                  type="monotone"
+                  dataKey="value"
+                  stroke="#8884d8"
+                  fill="#8884d8"
+                />
               </AreaChart>
             </CardContent>
           </Card>
@@ -192,14 +215,14 @@ export default function Dashboard() {
               <PieChart width={400} height={250}>
                 <Pie
                   data={pieData}
-                  cx='50%'
-                  cy='50%'
+                  cx="50%"
+                  cy="50%"
                   outerRadius={80}
-                  fill='#8884d8'
-                  dataKey='value'
+                  fill="#8884d8"
+                  dataKey="value"
                 >
                   {pieData.map((entry, index) => (
-                    <Cell key={`cell-${index}`} fill={entry.color} />
+                    <Cell key={`cell-${index + 1}`} fill={entry.color} />
                   ))}
                 </Pie>
               </PieChart>
@@ -213,24 +236,26 @@ export default function Dashboard() {
           <CardTitle>Recent Properties</CardTitle>
         </CardHeader>
         <CardContent>
-          <table className='min-w-full table-auto border border-gray-200'>
+          <table className="min-w-full table-auto border border-gray-200">
             <thead>
-              <tr className=''>
-                <th className='border p-2'>ID</th>
-                <th className='border p-2'>Title</th>
-                <th className='border p-2'>Price</th>
-                <th className='border p-2'>Location</th>
-                <th className='border p-2'>Status</th>
+              <tr className="">
+                <th className="border p-2">ID</th>
+                <th className="border p-2">Title</th>
+                <th className="border p-2">Price</th>
+                <th className="border p-2">Location</th>
+                <th className="border p-2">Status</th>
               </tr>
             </thead>
             <tbody>
               {properties.slice(0, 5).map((property) => (
                 <tr key={property.id}>
-                  <td className='border p-2'>{property.id}</td>
-                  <td className='border p-2'>{property.title}</td>
-                  <td className='border p-2'>${property.price}</td>
-                  <td className='border p-2'>{property.location}</td>
-                  <td className='border p-2'>{property.isForSale ? 'For Sale' : 'Sold'}</td>
+                  <td className="border p-2">{property.id}</td>
+                  <td className="border p-2">{property.title}</td>
+                  <td className="border p-2">${property.price}</td>
+                  <td className="border p-2">{property.location}</td>
+                  <td className="border p-2">
+                    {property.isForSale ? "For Sale" : "Sold"}
+                  </td>
                 </tr>
               ))}
             </tbody>

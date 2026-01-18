@@ -4,15 +4,13 @@ import Link from "next/link";
 import { useSession } from "next-auth/react";
 import LogoutButton from "@/components/auth/logout-button";
 import {
-  Layers2,
-  Settings,
   LayoutDashboard,
   House,
-  Users,
+  PlusCircle,
+  Settings,
   MessageSquare,
-  BarChart3,
-  Shield,
   User,
+  Shield,
 } from "lucide-react";
 import { Tab } from "./Tab";
 import { JSX } from "react";
@@ -21,56 +19,56 @@ interface MenuItem {
   name: string;
   link: string;
   icon: JSX.Element;
-  divider?: boolean;
+  roles?: string[];
 }
 
 const menuList: MenuItem[] = [
   {
-    name: "Admin Dashboard",
-    link: "/admin",
+    name: "Dashboard",
+    link: "/dashboard",
     icon: <LayoutDashboard className="h-5 w-5" />,
   },
   {
-    name: "Manage Properties",
-    link: "/admin/properties",
+    name: "My Properties",
+    link: "/dashboard/my-properties",
     icon: <House className="h-5 w-5" />,
   },
   {
-    name: "Manage Users",
-    link: "/admin/users",
-    icon: <Users className="h-5 w-5" />,
+    name: "Add Property",
+    link: "/upload",
+    icon: <PlusCircle className="h-5 w-5" />,
   },
   {
     name: "Inquiries",
-    link: "/admin/inquiries",
+    link: "/dashboard/inquiries",
     icon: <MessageSquare className="h-5 w-5" />,
   },
   {
-    name: "Analytics",
-    link: "/admin/analytics",
-    icon: <BarChart3 className="h-5 w-5" />,
-  },
-  {
-    name: "Add Property",
-    link: "/admin/Addproperties",
-    icon: <Layers2 className="h-5 w-5" />,
-    divider: true,
-  },
-  {
-    name: "User Dashboard",
-    link: "/dashboard",
+    name: "Profile",
+    link: "/dashboard/profile",
     icon: <User className="h-5 w-5" />,
   },
   {
+    name: "Admin Panel",
+    link: "/admin",
+    icon: <Shield className="h-5 w-5" />,
+    roles: ["ADMIN"],
+  },
+  {
     name: "Settings",
-    link: "/admin/settings",
+    link: "/dashboard/settings",
     icon: <Settings className="h-5 w-5" />,
   },
 ];
 
-export default function Sidebar() {
+export default function UserSidebar() {
   const { data: session } = useSession();
   const userRole = session?.user?.role;
+
+  const filteredMenuList = menuList.filter((item) => {
+    if (!item.roles) return true;
+    return item.roles.includes(userRole || "");
+  });
 
   return (
     <section className="sticky top-0 flex flex-col gap-10 border-r px-5 py-3 h-screen overflow-hidden w-[260px] z-50 bg-white dark:bg-gray-900">
@@ -84,30 +82,23 @@ export default function Sidebar() {
       </div>
 
       {session?.user && (
-        <div className="flex flex-col items-center gap-2 p-4 bg-red-50 dark:bg-red-900/20 rounded-lg border border-red-200 dark:border-red-800">
-          <div className="w-12 h-12 bg-red-500 rounded-full flex items-center justify-center">
-            <Shield className="w-6 h-6 text-white" />
+        <div className="flex flex-col items-center gap-2 p-4 bg-gray-50 dark:bg-gray-800 rounded-lg">
+          <div className="w-12 h-12 bg-blue-500 rounded-full flex items-center justify-center">
+            <span className="text-white font-semibold">
+              {session.user.name?.charAt(0) || session.user.email?.charAt(0)}
+            </span>
           </div>
           <div className="text-center">
-            <p className="font-medium text-sm">
-              {session.user.name || "Admin"}
-            </p>
-            <p className="text-xs text-red-600 dark:text-red-400 font-semibold uppercase">
-              Administrator
+            <p className="font-medium text-sm">{session.user.name || "User"}</p>
+            <p className="text-xs text-gray-500 capitalize">
+              {userRole?.toLowerCase()}
             </p>
           </div>
         </div>
       )}
 
-      <ul className="flex-1 h-full overflow-y-auto flex flex-col gap-1">
-        {menuList?.map((item, key) => (
-          <div key={key}>
-            <Tab item={item} />
-            {item.divider && (
-              <hr className="my-3 border-gray-200 dark:border-gray-700" />
-            )}
-          </div>
-        ))}
+      <ul className="flex-1 h-full overflow-y-auto flex flex-col gap-4">
+        {filteredMenuList?.map((item, key) => <Tab item={item} key={key} />)}
       </ul>
 
       <div className="flex justify-center">

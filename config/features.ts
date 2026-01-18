@@ -146,8 +146,17 @@ export const ADVANCED_FEATURES = {
 // ============================================
 export const NOTIFICATION_CONFIG = {
   email: {
-    provider: 'resend', // Already using Resend
-    from: process.env.EMAIL_FROM || 'noreply@realestate.com',
+    provider: 'nodemailer', // Using Nodemailer with SMTP
+    from: process.env.EMAIL_FROM || '"Real Estate" <noreply@realestate.com>',
+    smtp: {
+      host: process.env.SMTP_HOST || 'localhost',
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_PORT === '465',
+      auth: {
+        user: process.env.SMTP_USER || '',
+        pass: process.env.SMTP_PASS || '',
+      },
+    },
     templates: {
       propertyInquiry: {
         enabled: true,

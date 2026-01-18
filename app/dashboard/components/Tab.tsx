@@ -18,7 +18,6 @@ export function Tab({ item }: TabProps) {
   const pathname = usePathname();
   const isActive =
     pathname === item.link || pathname.startsWith(item.link + "/");
-  const isUserRoute = item.link.startsWith("/dashboard");
 
   return (
     <li>
@@ -26,19 +25,12 @@ export function Tab({ item }: TabProps) {
         href={item.link}
         className={`flex items-center gap-3 px-4 py-3 rounded-lg transition-all duration-200 ${
           isActive
-            ? isUserRoute
-              ? "bg-blue-500 text-white shadow-md"
-              : "bg-red-500 text-white shadow-md"
+            ? "bg-blue-500 text-white shadow-md"
             : "hover:bg-gray-100 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300"
         }`}
       >
         {item.icon}
         <span className="font-medium">{item.name}</span>
-        {isUserRoute && (
-          <span className="ml-auto text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded-full">
-            User
-          </span>
-        )}
       </Link>
     </li>
   );

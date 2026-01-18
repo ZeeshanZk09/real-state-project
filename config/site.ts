@@ -1,92 +1,113 @@
-import LogoutButton from '@/components/auth/logout-button';
-
 export const siteConfig = {
-  name: 'Real Estate',
-  description: 'Search properties.',
+  name: "Zebotix - Web & Business Automation Solutions",
+  description:
+    "Find your dream property with ease. Buy, sell, and rent properties online.",
   navItems: [
     {
-      label: 'Home',
-      href: '/',
+      label: "Home",
+      href: "/",
     },
     {
-      label: 'Buy',
-      href: '/Properties?type=buy',
+      label: "Properties",
+      href: "/Properties",
     },
     {
-      label: 'Sell',
-      href: '/Properties?type=sell',
+      label: "About",
+      href: "/about",
     },
     {
-      label: 'Rent',
-      href: '/Properties?type=rent',
+      label: "Dashboard",
+      href: "/dashboard",
+      auth: true,
+      userOnly: false, // Both users and admins can access
     },
     {
-      label: 'Admin Dashboard',
-      href: '/admin',
+      label: "Admin Panel",
+      href: "/admin",
       auth: true,
       adminOnly: true,
     },
     {
-      label: 'My Dashboard',
-      href: '/dashboard',
+      label: "Add Property",
+      href: "/upload",
       auth: true,
-      userOnly: true,
+      userOnly: false, // Both users and admins can add properties
     },
     {
-      label: 'Login',
-      href: '/login',
+      label: "Login",
+      href: "/login",
+      auth: false,
+    },
+    {
+      label: "Register",
+      href: "/register",
       auth: false,
     },
   ],
   navMenuItems: [
     {
-      label: 'Home',
-      href: '/',
+      label: "Home",
+      href: "/",
     },
     {
-      label: 'Admin Dashboard',
-      href: '/admin',
+      label: "Properties",
+      href: "/Properties",
+    },
+    {
+      label: "Dashboard",
+      href: "/dashboard",
+      auth: true,
+      userOnly: false,
+    },
+    {
+      label: "Admin Panel",
+      href: "/admin",
       auth: true,
       adminOnly: true,
     },
     {
-      label: 'My Dashboard',
-      href: '/dashboard',
+      label: "My Properties",
+      href: "/dashboard/my-properties",
       auth: true,
-      userOnly: true,
+      userOnly: false,
     },
     {
-      label: 'Properties',
-      href: '/Properties',
+      label: "Add Property",
+      href: "/upload",
+      auth: true,
+      userOnly: false,
     },
     {
-      label: 'Agents',
-      href: '/agent',
+      label: "About",
+      href: "/about",
     },
     {
-      label: 'About',
-      href: '/about',
+      label: "Privacy",
+      href: "/privacy",
     },
     {
-      label: 'Settings',
-      href: '/settings',
+      label: "Settings",
+      href: "/dashboard/settings",
+      auth: true,
+      userOnly: false,
     },
     {
-      label: 'Help & Feedback',
-      href: '/help-feedback',
+      label: "Login",
+      href: "/login",
+      auth: false,
     },
     {
-      label: 'login',
-      href: '/login',
+      label: "Register",
+      href: "/register",
       auth: false,
     },
   ],
   links: {
-    github: 'https://github.com',
-    twitter: 'https://twitter.com',
-    docs: 'https://nextui.org',
-    discord: 'https://discord.gg',
-    sponsor: 'https://patreon.com',
+    github: "https://github.com",
+    twitter: "https://twitter.com",
+    docs: "https://nextui.org",
+    discord: "https://discord.gg",
+    sponsor: "https://patreon.com",
   },
 };
 

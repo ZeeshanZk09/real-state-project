@@ -4,9 +4,7 @@ import { compare } from "bcryptjs";
 import type { NextAuthConfig } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 import Google from "next-auth/providers/google";
-import { Role } from "../generated/enums";
 import prisma from "../lib/prisma";
-// import Linkedin from 'next-auth/providers/linkedin';
 
 export const authConfig = {
   pages: {
@@ -39,7 +37,7 @@ export const authConfig = {
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
-        session.user.role = token.role as Role;
+        session.user.role = token.role as "VISITOR" | "USER" | "ADMIN";
       }
       return session;
     },
@@ -48,13 +46,12 @@ export const authConfig = {
     Google({
       allowDangerousEmailAccountLinking: true,
     }),
-    // Linkedin({ allowDangerousEmailAccountLinking: true }),
     Credentials({
       credentials: {
         email: { label: "Email", type: "email" },
         password: { label: "Password", type: "password" },
       },
-      async authorize(credentials, request) {
+      async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           return null;
         }
@@ -63,13 +60,13 @@ export const authConfig = {
         const user = await prisma.user.findUnique({
           where: { email: email },
         });
-        if (!user || !user.password) {
+        if (!user?.password) {
           return null;
         }
 
-        // if (!user.emailVerified) {
-        //   return null;
-        // }
+        if (!user.emailVerified) {
+          return null;
+        }
         const isValid = await compare(
           credentials.password as string,
           user.password,
@@ -78,7 +75,17 @@ export const authConfig = {
           return null;
         }
         console.log("user ahmade: ", user);
-        return user;
+        // Map role from Prisma enum to NextAuth role
+        const mappedRole =
+          user.role === "admin" ? ("ADMIN" as const) : ("USER" as const);
+
+        return {
+          id: user.id,
+          email: user.email,
+          name: `${user.firstName} ${user.lastName}`,
+          image: user.image,
+          role: mappedRole,
+        } as any;
       },
     }),
   ],

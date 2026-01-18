@@ -31,7 +31,11 @@ This project has been refactored to centralize environment variable management u
 | `IMAGEKIT_PUBLIC_KEY`   | ImageKit public key                   | [ImageKit Dashboard](https://imagekit.io/dashboard/developer/api-keys) |
 | `IMAGEKIT_PRIVATE_KEY`  | ImageKit private key                  | [ImageKit Dashboard](https://imagekit.io/dashboard/developer/api-keys) |
 | `IMAGEKIT_URL_ENDPOINT` | ImageKit URL endpoint                 | [ImageKit Dashboard](https://imagekit.io/dashboard/developer/api-keys) |
-| `RESEND_API_KEY`        | Resend email service API key          | [Resend API Keys](https://resend.com/api-keys)                         |
+| `SMTP_HOST`             | SMTP server hostname                  | Your email provider's SMTP settings                                    |
+| `SMTP_PORT`             | SMTP server port (usually 587)        | Your email provider's SMTP settings                                    |
+| `SMTP_USER`             | SMTP authentication username          | Your email account or username                                         |
+| `SMTP_PASS`             | SMTP authentication password          | Your email password or app-specific password                           |
+| `EMAIL_FROM`            | Default sender email address          | Your verified sender email address                                     |
 | `ZILLOW_API_KEY`        | Zillow API key for property data      | [RapidAPI Zillow](https://rapidapi.com/s.mahmoud97/api/zillow-com1)    |
 
 ## Updated Files

@@ -1,38 +1,89 @@
+import { auth } from "@/server/auth";
 import { NextResponse } from "next/server";
-import type { NextRequest } from "next/server";
-import { auth } from "@/server/auth"; // Adjust this to the path where your `auth` function is defined
 
-export async function middleware(req: NextRequest) {
-  // Check the user session (auth function should return session info)
-  const session = await auth();
+export default auth((req) => {
+  const isLoggedIn = !!req.auth;
+  const { pathname } = req.nextUrl;
+  const userRole = req.auth?.user?.role;
 
-  
-  // If no session exists, redirect to login page
-  if (!session) {
-    const loginUrl = new URL("/login", req.url); // Adjust the login route if needed
-    return NextResponse.redirect(loginUrl);
-  }
+  // Define route categories
+  const publicRoutes = ["/", "/Properties", "/about", "/privacy"];
+  const authRoutes = ["/login", "/register"];
+  const adminRoutes = ["/admin"];
+  const userRoutes = ["/dashboard", "/upload"];
+  const apiRoutes = ["/api"];
 
-  // Check if trying to access admin routes
-  if (req.nextUrl.pathname.startsWith("/admin")) {
-    if (session.user && 'role' in session.user && session.user.role !== "admin") {
-      // Redirect non-admin users to home page
-      const homeUrl = new URL("/", req.url);
-      return NextResponse.redirect(homeUrl);
-    }
-  }
+  // Helper functions
+  const isPublicRoute =
+    publicRoutes.some((route) => pathname.startsWith(route)) ||
+    pathname === "/";
+  const isAuthRoute = authRoutes.some((route) => pathname.startsWith(route));
+  const isAdminRoute = adminRoutes.some((route) => pathname.startsWith(route));
+  const isUserRoute = userRoutes.some((route) => pathname.startsWith(route));
+  const isApiRoute = apiRoutes.some((route) => pathname.startsWith(route));
+  const isPropertyDetailRoute = /^\/Properties\/[^/]+$/.test(pathname);
 
-  // Check if trying to access user dashboard
-  if (req.nextUrl.pathname.startsWith("/dashboard")) {
-    // Allow access to user dashboard for all authenticated users
+  // Allow public routes for everyone
+  if (isPublicRoute || isPropertyDetailRoute) {
     return NextResponse.next();
   }
 
-  // Allow the request to continue
-  return NextResponse.next();
-}
+  // Handle API routes separately
+  if (isApiRoute) {
+    // Allow public API routes
+    if (pathname.startsWith("/api/properties") && req.method === "GET") {
+      return NextResponse.next();
+    }
+    // Protect other API routes
+    if (!isLoggedIn) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+    return NextResponse.next();
+  }
 
-// Apply this middleware to all routes inside the /admin folder and /dashboard
+  // Redirect logged-in users away from auth pages
+  if (isAuthRoute && isLoggedIn) {
+    const redirectTo = userRole === "ADMIN" ? "/admin" : "/dashboard";
+    return NextResponse.redirect(new URL(redirectTo, req.nextUrl));
+  }
+
+  // Redirect unauthenticated users to login
+  if (!isLoggedIn && (isAdminRoute || isUserRoute)) {
+    const loginUrl = new URL("/login", req.nextUrl);
+    loginUrl.searchParams.set("callbackUrl", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  // Role-based access control
+  if (isLoggedIn) {
+    // Admin can access all routes
+    if (userRole === "ADMIN") {
+      return NextResponse.next();
+    }
+
+    // Regular users can't access admin routes
+    if (isAdminRoute && userRole !== "ADMIN") {
+      return NextResponse.redirect(new URL("/dashboard", req.nextUrl));
+    }
+
+    // Users must be at least USER role to access user routes
+    if (isUserRoute && userRole === "VISITOR") {
+      return NextResponse.redirect(new URL("/login", req.nextUrl));
+    }
+  }
+
+  return NextResponse.next();
+});
+
 export const config = {
-  matcher: ["/admin/:path*", "/dashboard/:path*"],
+  matcher: [
+    /*
+     * Match all request paths except for the ones starting with:
+     * - _next/static (static files)
+     * - _next/image (image optimization files)
+     * - favicon.ico (favicon file)
+     * - public folder
+     */
+    "/((?!_next/static|_next/image|favicon.ico|public|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
+  ],
 };
