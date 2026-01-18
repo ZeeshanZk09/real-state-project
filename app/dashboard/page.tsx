@@ -6,7 +6,7 @@ import { CardBody } from "@heroui/react";
 
 export default async function DashboardPage() {
   const session = await auth();
-
+  console.log("Session:", session);
   if (!session) {
     redirect("/login");
   }
