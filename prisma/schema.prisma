@@ -1,0 +1,180 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// Enums
+enum SkillLevel {
+  Buyer
+  Seller
+  Advanced
+  Expert
+  Master
+}
+
+enum Role {
+  user
+  admin
+}
+
+// User model
+model User {
+  id                String     @id @default(cuid())
+  firstName         String?
+  lastName          String?
+  location          String?
+  email             String     @unique
+  image             String?    @default("no-image")
+  password          String?
+  skillLevel        SkillLevel @default(Buyer)
+  role              Role       @default(user)
+  resetToken        String?
+  resetTokenExpires DateTime?
+
+  // Relations
+  accounts        Account[]
+  sessions        Session[]
+  savedProperties SavedProperty[]
+
+  @@map("user")
+}
+
+// NextAuth.js required models
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("account")
+}
+
+model Session {
+  id           String   @id @default(cuid())
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("session")
+}
+
+model VerificationToken {
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+  @@map("verification_token")
+}
+
+// Property model
+model Property {
+  id                 Int      @id @default(autoincrement())
+  zpid               String   @unique @db.VarChar(50)
+  title              String   @db.VarChar(255)
+  description        String
+  propdetails        String
+  price              Int
+  location           String   @db.VarChar(255)
+  imageUrl           String   @db.VarChar(500)
+  bedrooms           Int
+  bathrooms          Int
+  sqft               Int
+  LotSize            Int
+  HOADues            Int
+  YearBuilt          Int
+  GarageSqFt         Int
+  BasementSqFt       Int
+  propertyType       String   @db.VarChar(255)
+  isForSale          Boolean  @default(true)
+  appliances         String?  @db.VarChar(255)
+  basement           String?  @db.VarChar(50)
+  floorCovering      String?  @db.VarChar(255)
+  coolingType        String?  @db.VarChar(255)
+  heatingType        String?  @db.VarChar(255)
+  heatingFuel        String?  @db.VarChar(255)
+  rooms              String?  @db.VarChar(255)
+  indoorFeatures     String?  @db.VarChar(255)
+  buildingAmenities  String?  @db.VarChar(255)
+  architecturalStyle String?  @db.VarChar(255)
+  exterior           String?  @db.VarChar(255)
+  outdoorAmenities   String?  @db.VarChar(255)
+  parking            String?  @db.VarChar(255)
+  roof               String?  @db.VarChar(255)
+  view               String?  @db.VarChar(255)
+  createdAt          DateTime @default(now())
+
+  // Relations
+  propertyDetails PropertyDetail[]
+  propertyImages  PropertyImage[]
+  savedProperties SavedProperty[]
+
+  @@map("properties")
+}
+
+// Property details model
+model PropertyDetail {
+  id             Int      @id @default(autoincrement())
+  zpid           String   @db.VarChar(50)
+  walkScore      Int?
+  transitScore   Int?
+  bikeScore      Int?
+  yearBuilt      Int?
+  taxHistory     Json?
+  priceHistory   Json?
+  zestimate      Int?
+  rentalEstimate Int?
+  updatedAt      DateTime @default(now())
+
+  // Relations
+  property Property @relation(fields: [zpid], references: [zpid])
+
+  @@map("property_details")
+}
+
+// Property images model
+model PropertyImage {
+  id        Int      @id @default(autoincrement())
+  zpid      String   @db.VarChar(50)
+  imageUrl  String   @db.VarChar(500)
+  type      String?  @db.VarChar(50)
+  createdAt DateTime @default(now())
+
+  // Relations
+  property Property @relation(fields: [zpid], references: [zpid])
+
+  @@map("property_images")
+}
+
+// Saved properties model
+model SavedProperty {
+  id         Int      @id @default(autoincrement())
+  userId     String
+  propertyId Int
+  createdAt  DateTime @default(now())
+
+  // Relations
+  user     User     @relation(fields: [userId], references: [id])
+  property Property @relation(fields: [propertyId], references: [id])
+
+  @@map("saved_properties")
+}
